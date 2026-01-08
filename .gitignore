@@ -1,3 +1,18 @@
+# Environment variables / secrets
 .env
-venv
-.env
+
+# Virtual environment
+venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# OS files
+.DS_Store
+
+# Editor / IDE
+.vscode/
+
+# Gradio / temp uploads
+*.log
