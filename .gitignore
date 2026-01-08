@@ -16,3 +16,6 @@ __pycache__/
 
 # Gradio / temp uploads
 *.log
+
+# Sample text
+sample.txt
