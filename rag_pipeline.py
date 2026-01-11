@@ -1,5 +1,6 @@
 from pypdf import PdfReader
 from typing import List
+from dataclasses import dataclass
 
 def read_pdf(path: str) -> str:
     """Extract text from all pages of a PDF and return it as one string."""
@@ -42,3 +43,26 @@ def chunk_text(text: str, chunk_size: int = 1200, overlap: int = 200) -> List[st
         start = max(0, end - overlap)
 
     return chunks
+
+@dataclass
+class Chunk:
+    text: str
+    source: str  # filename
+
+def build_chunks(file_paths: List[str]) -> List[Chunk]:
+    all_chunks: List[Chunk] = []
+
+    for path in file_paths:
+        lower = path.lower()
+        if lower.endswith(".pdf"):
+            text = read_pdf(path)
+        elif lower.endswith(".txt"):
+            text = read_txt(path)
+        else:
+            continue  # unsupported file type for now
+
+        source = path.split("/")[-1]  # just filename
+        for ch in chunk_text(text):
+            all_chunks.append(Chunk(text=ch, source=source))
+
+    return all_chunks
